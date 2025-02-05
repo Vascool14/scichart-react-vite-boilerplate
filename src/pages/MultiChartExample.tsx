@@ -4,7 +4,7 @@ import { SciChartSurface } from "scichart";
 
 // Adjust these values as needed
 const rowsNumber = 20;
-const columnsNumber = 25;
+const columnsNumber = 15;
 const totalCharts = rowsNumber * columnsNumber;
 
 // Generate an array of div IDs for each chart

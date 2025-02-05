@@ -61,33 +61,20 @@ export class SimpleSciChartLoader implements ISciChartLoader {
 
 const loaderCss = `
 .scichart-loader {
-  border: 4px solid rgba(0, 0, 0, .1);
-  border-left-color: transparent;
-  border-radius: 50%;
+    border: 4px solid #88888844;
+    border-left-color: transparent;
+    border-radius: 50%;
 }
 
 .scichart-loader {
-  border: 4px solid rgba(0, 0, 0, .1);
-  border-left-color: transparent;
-  width: 24px;
-  height: 24px;
-}
-
-.scichart-loader {
-  border: 4px solid rgba(0, 0, 0, .1);
-  border-left-color: transparent;
-  width: 24px;
-  height: 24px;
-  animation: spin89345 1s linear infinite;
+    border: 4px solid #88888844;
+    border-left-color: transparent;
+    width: 24px;
+    height: 24px;    
+    animation: spin89345 1s linear infinite;
 }
 
 @keyframes spin89345 {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-`
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}`

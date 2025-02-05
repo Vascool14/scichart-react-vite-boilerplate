@@ -26,6 +26,8 @@ import {
     SciChartJSLightTheme,
 } from "scichart";
 
+import { optimisedAxesOptions } from "./multiChartDraw"; // also test on subCharts
+
 export type TMessage = {
     title: string;
     detail: string;
@@ -37,7 +39,7 @@ const sciChartTheme = new SciChartJSLightTheme();
 export const drawGridExample = async (
     rootElement: string | HTMLDivElement,
 ) => {
-    const columnsNumber = 25;
+    const columnsNumber = 15;
     const rowsNumber = 20;
     const subChartsNumber = columnsNumber * rowsNumber;
 
@@ -125,14 +127,18 @@ export const drawGridExample = async (
         // add axes to the sub-surface
         const subChartXAxis = new NumericAxis(wasmContext, {
             id: `${subChartSurface.id}-XAxis`,
-            isVisible: false
+            // isVisible: false
+            ...optimisedAxesOptions,
+            labelPrecision: 0
         });
 
         subChartSurface.xAxes.add(subChartXAxis);
 
         const subChartYAxis = new NumericAxis(wasmContext, {
             id: `${subChartSurface.id}-YAxis`,
-            isVisible: false
+            // isVisible: false
+            ...optimisedAxesOptions,
+            labelPrecision: 0   
         });
         subChartSurface.yAxes.add(subChartYAxis);
 

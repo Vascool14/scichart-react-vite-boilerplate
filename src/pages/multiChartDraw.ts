@@ -2,9 +2,11 @@ import {
     SciChartSurface,
     NumericAxis,
     ESeriesType,
-    SciChartJSLightTheme,
     Thickness,
+    SciChartJSLightTheme,
+    EAutoRange,
 } from "scichart";
+import { SimpleSciChartLoader } from "../SimpleSciChartLoader";
 
 import {
     createRenderableSeries,
@@ -12,12 +14,19 @@ import {
     prePopulateData,
 } from "../utils";
 
-import { SimpleSciChartLoader } from "../SimpleSciChartLoader";
-
 const COLORS = [ "#FFCC0088", "#FF000088", "#FF006688", "#FF00CC88", "#CC00FF88", "#6600FF88", "#0066FF88", "#00FFFF88", "#00FF6688", "#FFFF0088" ];
 
+// AXIS OPTIMISATION OPTIONS
+export const optimisedAxesOptions = {
+    useNativeText: true,
+    useSharedCache: true,
+    drawMajorTickLines: false,
+    drawMinorTickLines: false,
+    drawMinorGridLines: false,
+    autoRange: EAutoRange.Once
+}
+
 export async function drawExample(divId: string) {
-    // Create a SciChartSurface in the given div
     const { wasmContext, sciChartSurface } = await SciChartSurface.create(divId, {
         theme: new SciChartJSLightTheme(),
         loader: new SimpleSciChartLoader(),
@@ -26,13 +35,17 @@ export async function drawExample(divId: string) {
 
     // Create X-axis
     const xAxis = new NumericAxis(wasmContext, {
-        isVisible: false,
+        // isVisible: false,
+        ...optimisedAxesOptions,
+        labelPrecision: 0,
     });
     sciChartSurface.xAxes.add(xAxis);
 
     // Create Y-axis
     const yAxis = new NumericAxis(wasmContext, {
-        isVisible: false,
+        // isVisible: false,
+        ...optimisedAxesOptions,
+        labelPrecision: 0
     });
     sciChartSurface.yAxes.add(yAxis);
 
