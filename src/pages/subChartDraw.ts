@@ -24,6 +24,10 @@ import {
     Thickness,
     TSciChart,
     SciChartJSLightTheme,
+    IDataSeries,
+    XyDataSeries,
+    XyyDataSeries,
+    EAutoRange,
 } from "scichart";
 
 import { optimisedAxesOptions } from "./multiChartDraw"; // also test on subCharts
@@ -45,7 +49,7 @@ export const drawGridExample = async (
 
     const dataSettings = {
         seriesCount: 3,
-        initialPoints: 500,
+        initialPoints: 100,
     };
 
     const originalGetStrokeColor = sciChartTheme.getStrokeColor;
@@ -88,7 +92,6 @@ export const drawGridExample = async (
         ESeriesType.BandSeries,
         ESeriesType.ScatterSeries,
         ESeriesType.CandlestickSeries,
-        // ESeriesType.TextSeries
     ];
 
     const subChartsMap: Map<
@@ -127,16 +130,16 @@ export const drawGridExample = async (
         // add axes to the sub-surface
         const subChartXAxis = new NumericAxis(wasmContext, {
             id: `${subChartSurface.id}-XAxis`,
-            // isVisible: false
+            isVisible: false,
             ...optimisedAxesOptions,
-            labelPrecision: 0
+            labelPrecision: 0,
+            autoRange: EAutoRange.Always
         });
-
         subChartSurface.xAxes.add(subChartXAxis);
 
         const subChartYAxis = new NumericAxis(wasmContext, {
             id: `${subChartSurface.id}-YAxis`,
-            // isVisible: false
+            isVisible: false,
             ...optimisedAxesOptions,
             labelPrecision: 0   
         });
@@ -218,6 +221,28 @@ export const drawGridExample = async (
         const seriesType = seriesTypes[subChartIndex % seriesTypes.length];
         initSubChart(seriesType, subChartIndex);
     }
+
+    function updateAllSubcharts(){
+        subChartsMap.forEach(({ seriesType, dataSeriesType, dataSeriesArray }) => {
+            dataSeriesArray.forEach((dataSeries) => {
+                const newX = dataSeries.getNativeXValues().get(dataSeries.count() - 1) + 1;
+                switch (dataSeries.type) {
+                    case EDataSeriesType.Xy:
+                        (dataSeries as XyDataSeries).append(newX, Math.random() * 20);
+                        break;
+                    case EDataSeriesType.Xyy:
+                        (dataSeries as XyyDataSeries).append(newX, Math.random() * 20, Math.random() * 20);
+                        break;
+                }
+            })
+        });
+
+        requestAnimationFrame(updateAllSubcharts)
+
+    }
+
+    updateAllSubcharts();
+
 
     return { sciChartSurface: mainSurface, wasmContext };
 }

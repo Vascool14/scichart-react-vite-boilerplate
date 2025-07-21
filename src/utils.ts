@@ -203,7 +203,7 @@ export const prePopulateData = (
 const dsOptions: IBaseDataSeriesOptions = {
     isSorted: true,
     containsNaN: false, 
-    fifoCapacity: 6000,
+    fifoCapacity: 100,
 };
 
 export const createRenderableSeries = (

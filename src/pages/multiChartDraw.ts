@@ -23,7 +23,6 @@ export const optimisedAxesOptions = {
     drawMajorTickLines: false,
     drawMinorTickLines: false,
     drawMinorGridLines: false,
-    autoRange: EAutoRange.Once
 }
 
 export async function drawExample(divId: string) {
